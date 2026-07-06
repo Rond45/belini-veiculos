@@ -6,41 +6,60 @@ interface CardVeiculoProps {
 }
 
 function formatarPreco(preco: number) {
-  return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  return preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 })
 }
 
 function formatarKm(km: number) {
   return `${km.toLocaleString('pt-BR')} km`
 }
 
+const rotuloStatus: Record<string, { label: string; cor: string }> = {
+  reservado: { label: 'Reservado', cor: 'text-[var(--color-cautela)]' },
+  vendido: { label: 'Vendido', cor: 'text-[var(--color-cinza-medio)]' },
+}
+
 export function CardVeiculo({ veiculo }: CardVeiculoProps) {
   const capa = veiculo.fotos?.find((f) => f.capa) ?? veiculo.fotos?.[0]
+  const status = rotuloStatus[veiculo.status]
 
   return (
     <Link
       to={`/veiculo/${veiculo.id}`}
-      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden hover:border-[var(--color-primary)] transition-colors block"
+      className="group rounded-md border border-[var(--color-aco)] bg-[var(--color-pneu)] overflow-hidden hover:border-[var(--color-cautela)] transition-colors block"
     >
-      <div className="aspect-video bg-neutral-800 flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-video bg-[var(--color-asfalto)] flex items-center justify-center overflow-hidden">
         {capa ? (
-          <img src={capa.url} alt={`${veiculo.marca?.nome} ${veiculo.modelo?.nome}`} className="w-full h-full object-cover" />
+          <img
+            src={capa.url}
+            alt={`${veiculo.marca?.nome} ${veiculo.modelo?.nome}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
         ) : (
-          <span className="text-neutral-500 text-sm">Sem foto</span>
+          <span className="text-[var(--color-cinza-medio)] text-sm font-specs">SEM FOTO</span>
+        )}
+
+        {veiculo.destaque && (
+          <div className="absolute top-3 -left-9 -rotate-45 faixa-cautela text-[var(--color-asfalto)] text-[10px] font-bold font-display tracking-wider w-32 text-center py-0.5">
+            DESTAQUE
+          </div>
         )}
       </div>
+
       <div className="p-4">
-        {veiculo.status === 'reservado' && (
-          <span className="text-xs font-medium text-[var(--color-primary)] uppercase">Reservado</span>
+        {status && (
+          <span className={`font-specs text-xs uppercase tracking-wide ${status.cor}`}>{status.label}</span>
         )}
-        <h3 className="font-semibold mt-1">
+        <h3 className="display text-base leading-tight mt-1">
           {veiculo.marca?.nome} {veiculo.modelo?.nome}
         </h3>
-        <p className="text-sm text-neutral-400">{veiculo.versao}</p>
-        <div className="flex items-center justify-between mt-3 text-sm text-neutral-400">
+        <p className="text-sm text-[var(--color-cinza-medio)] truncate">{veiculo.versao}</p>
+
+        <div className="flex items-center justify-between mt-3 font-specs text-xs text-[var(--color-cinza-medio)] border-t border-[var(--color-aco)] pt-3">
           <span>{veiculo.ano_fabricacao}/{veiculo.ano_modelo}</span>
           <span>{formatarKm(veiculo.km)}</span>
         </div>
-        <p className="text-lg font-bold text-[var(--color-primary)] mt-2">
+
+        <p className="font-specs text-xl font-bold text-[var(--color-cautela)] mt-3">
           {formatarPreco(veiculo.preco)}
         </p>
       </div>
