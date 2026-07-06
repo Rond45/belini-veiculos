@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  /* Identidade visual Belini Veículos: preto e amarelo */
+  --color-primary: #FFC700;
+  --color-primary-foreground: #0A0A0A;
+  --color-background: #0A0A0A;
+  --color-foreground: #FAFAFA;
+  --color-card: #161616;
+  --color-card-foreground: #FAFAFA;
+  --color-muted: #262626;
+  --color-muted-foreground: #A3A3A3;
+  --color-border: #2A2A2A;
+  --color-destructive: #EF4444;
+  --color-success: #22C55E;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: 'Inter', system-ui, sans-serif;
+}
