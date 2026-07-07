@@ -1,60 +1,78 @@
 @import "tailwindcss";
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource-variable/jetbrains-mono";
 
 @theme {
-  /* Paleta — inspirada na sinalização física real da loja (lona preta/amarela) */
-  --color-asfalto: #0D0D0D;        /* fundo principal */
-  --color-pneu: #1A1A1A;           /* superfície de cards, um degrau acima do fundo */
-  --color-aco: #2B2B2B;            /* bordas, divisores */
-  --color-cautela: #FFC700;        /* amarelo de sinalização — acento primário */
-  --color-neblina: #F2F0EA;        /* texto principal, branco quebrado */
-  --color-cinza-medio: #8A8A8A;    /* texto secundário */
-  --color-alerta: #E63946;         /* reservado/vendido, urgência */
-  --color-sucesso: #3FA34D;        /* disponível, confirmação */
+  --color-background: #0D0D0D;
+  --color-foreground: #F7F7F5;
+  --color-surface: #161616;
+  --color-surface-elevated: #1E1E1E;
+  --color-card: #161616;
+  --color-border: rgba(255,255,255,0.08);
+  --color-input: rgba(255,255,255,0.12);
+  --color-muted-foreground: #A8A8A8;
+  --color-primary: #FFC700;
+  --color-primary-foreground: #0D0D0D;
+  --color-signal: #FFC700;
+  --color-signal-foreground: #0D0D0D;
+  --color-destructive: #E03B3B;
 
-  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
 }
 
 body {
-  background-color: var(--color-asfalto);
-  color: var(--color-neblina);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, .display {
+h1, h2, h3, h4, .display {
   font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-.font-specs {
+.font-tech {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
-/* Assinatura visual: faixa diagonal de sinalização, usada com moderação */
-.faixa-cautela {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--color-cautela),
-    var(--color-cautela) 22px,
-    var(--color-asfalto) 22px,
-    var(--color-asfalto) 44px
-  );
+/* Utilitários replicando o sistema visual validado no Lovable */
+.bg-hero {
+  background:
+    radial-gradient(120% 80% at 80% 20%, rgba(255,199,0,0.18), transparent 60%),
+    linear-gradient(180deg, #0A0A0A 0%, #0D0D0D 100%);
 }
+.bg-signal-gradient {
+  background: linear-gradient(135deg, #FFE066 0%, #E6B800 100%);
+}
+.bg-surface-gradient {
+  background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+}
+.shadow-signal {
+  box-shadow: 0 10px 40px -12px rgba(255,199,0,0.45);
+}
+.shadow-card {
+  box-shadow: 0 20px 50px -25px rgba(0,0,0,0.9), inset 0 1px 0 0 rgba(255,255,255,0.05);
+}
+.text-signal { color: var(--color-signal); }
+.bg-signal\/10 { background-color: rgba(255,199,0,0.10); }
+.bg-signal\/5 { background-color: rgba(255,199,0,0.05); }
+.border-signal\/40 { border-color: rgba(255,199,0,0.40); }
+.border-signal\/50 { border-color: rgba(255,199,0,0.50); }
 
-.divisor-diagonal {
-  height: 6px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    var(--color-cautela),
-    var(--color-cautela) 10px,
-    transparent 10px,
-    transparent 20px
-  );
-  opacity: 0.5;
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
 @media (prefers-reduced-motion: reduce) {

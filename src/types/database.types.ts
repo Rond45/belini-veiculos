@@ -49,6 +49,7 @@ export interface Veiculo {
   opcionais: string[] | null
   status: StatusVeiculo
   destaque: boolean
+  destaque_semana: boolean
   vendedor_id: string | null
   visualizacoes: number
   created_at: string

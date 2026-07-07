@@ -2,9 +2,11 @@ import { Outlet } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { WhatsAppFloat } from './WhatsAppFloat'
+import { useConfiguracoes } from '@/hooks/useConfiguracoes'
 
 export function PublicLayout() {
-  // TODO: número puxado de `configuracoes.telefone_whatsapp_principal`
+  const { data: config } = useConfiguracoes()
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -12,7 +14,7 @@ export function PublicLayout() {
         <Outlet />
       </main>
       <Footer />
-      <WhatsAppFloat numero="5569999999999" />
+      <WhatsAppFloat numero={config?.telefone_whatsapp_principal || undefined} />
     </div>
   )
 }

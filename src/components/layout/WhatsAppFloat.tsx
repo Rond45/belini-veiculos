@@ -1,19 +1,25 @@
+import { MessageCircle } from 'lucide-react'
+
 interface WhatsAppFloatProps {
-  numero: string
+  numero?: string
   mensagem?: string
 }
 
-export function WhatsAppFloat({ numero, mensagem = 'Olá! Vim pelo site da Belini Veículos.' }: WhatsAppFloatProps) {
-  const link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
+export function WhatsAppFloat({
+  numero = '5569900000000',
+  mensagem = 'Olá, tenho interesse em um veículo do estoque Belini.',
+}: WhatsAppFloatProps) {
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
   return (
     <a
-      href={link}
+      href={url}
       target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg z-20"
+      rel="noreferrer"
+      className="fixed bottom-4 right-4 z-30 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-3 font-semibold text-black shadow-[0_15px_40px_-10px_rgba(37,211,102,0.7)] transition-transform hover:-translate-y-0.5 sm:bottom-6 sm:right-6 sm:px-5"
       aria-label="Falar no WhatsApp"
     >
-      WA
+      <MessageCircle size={18} />
+      <span className="hidden sm:inline">WhatsApp</span>
     </a>
   )
 }

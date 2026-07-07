@@ -1,39 +1,6 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
-import type { User } from '@supabase/supabase-js'
-import type { AdminUser } from '@/types/database.types'
-
-export function useAuth() {
-  const [user, setUser] = useState<User | null>(null)
-  const [perfil, setPerfil] = useState<AdminUser | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function carregarPerfil(userId: string) {
-      const { data } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('id', userId)
-        .single()
-      setPerfil(data ?? null)
-    }
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      if (session?.user) carregarPerfil(session.user.id)
-      setLoading(false)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user ?? null)
-        if (session?.user) carregarPerfil(session.user.id)
-        else setPerfil(null)
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  return { user, perfil, loading }
-}
+// Re-exporta o hook a partir do AuthContext centralizado.
+// Motivo: useAuth() não pode mais ser um hook independente — precisa ler
+// de uma única fonte de verdade compartilhada (ver src/context/AuthContext.tsx),
+// senão login e proteção de rota podem discordar sobre o estado da sessão
+// no instante entre a autenticação e o carregamento do perfil.
+export { useAuth } from '@/context/AuthContext'
