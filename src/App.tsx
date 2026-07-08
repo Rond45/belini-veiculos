@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/context/AuthContext'
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { Home } from '@/pages/Home'
 import { Catalogo } from '@/pages/Catalogo'
@@ -21,6 +22,7 @@ export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* Site público */}
           <Route element={<PublicLayout />}>
